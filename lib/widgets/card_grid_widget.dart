@@ -35,7 +35,8 @@ class _CardGridState extends State<CardGrid> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return DetailPage(id: "1");
+                  return DetailPage(
+                      id: widget.snapshot!.data[index].id.toString());
                 },
               ),
             );
@@ -73,8 +74,8 @@ class _CardGridState extends State<CardGrid> {
                               });
                             },
                           ),
-                          top: 10,
-                          right: 10,
+                          top: 1.5,
+                          right: 1.5,
                         ),
                       ],
                     ),

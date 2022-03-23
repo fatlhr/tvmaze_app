@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                 return Column(
                   children: [
                     SizedBox(
-                      height: 10,
+                      height: 30,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -144,4 +144,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

@@ -12,29 +12,29 @@ String detailShowToJson(DetailShow data) => json.encode(data.toJson());
 
 class DetailShow {
   DetailShow({
-     required this.id,
-     this.url,
-     this.name,
-     this.type,
-     this.language,
-     this.genres,
-     this.status,
-     this.runtime,
-     this.averageRuntime,
-     this.premiered,
-     this.ended,
-     this.officialSite,
-     this.schedule,
-     this.rating,
-     this.weight,
-     this.network,
-     this.webChannel,
-     this.dvdCountry,
-     this.externals,
-     this.image,
-     this.summary,
-     this.updated,
-     this.links,
+    required this.id,
+    this.url,
+    this.name,
+    this.type,
+    this.language,
+    this.genres,
+    this.status,
+    this.runtime,
+    this.averageRuntime,
+    this.premiered,
+    this.ended,
+    this.officialSite,
+    this.schedule,
+    this.rating,
+    this.weight,
+    this.network,
+    this.webChannel,
+    this.dvdCountry,
+    this.externals,
+    this.image,
+    this.summary,
+    this.updated,
+    this.links,
   });
 
   int id;
@@ -56,7 +56,7 @@ class DetailShow {
   dynamic webChannel;
   dynamic dvdCountry;
   Externals? externals;
-  Image? image;
+  Img? image;
   String? summary;
   int? updated;
   Links? links;
@@ -72,7 +72,7 @@ class DetailShow {
         runtime: json["runtime"],
         averageRuntime: json["averageRuntime"],
         premiered: DateTime.parse(json["premiered"]),
-        ended: DateTime.parse(json["ended"]),
+        ended: DateTime.parse(json["ended"] ?? DateTime(0).toString()),
         officialSite: json["officialSite"],
         schedule: Schedule.fromJson(json["schedule"]),
         rating: Rating.fromJson(json["rating"]),
@@ -81,7 +81,7 @@ class DetailShow {
         webChannel: json["webChannel"],
         dvdCountry: json["dvdCountry"],
         externals: Externals.fromJson(json["externals"]),
-        image: Image.fromJson(json["image"]),
+        image: Img.fromJson(json["image"]),
         summary: json["summary"],
         updated: json["updated"],
         links: Links.fromJson(json["_links"]),
@@ -102,7 +102,7 @@ class DetailShow {
         "ended":
             "${ended?.year.toString().padLeft(4, '0')}-${ended?.month.toString().padLeft(2, '0')}-${ended?.day.toString().padLeft(2, '0')}",
         "officialSite": officialSite,
-        "schedule": schedule?.toJson() ,
+        "schedule": schedule?.toJson(),
         "rating": rating?.toJson(),
         "weight": weight,
         "network": network?.toJson(),
@@ -119,8 +119,8 @@ class DetailShow {
 class Externals {
   Externals({
     required this.tvrage,
-     required this.thetvdb,
-     required this.imdb,
+    required this.thetvdb,
+    required this.imdb,
   });
 
   int tvrage;
@@ -140,16 +140,16 @@ class Externals {
       };
 }
 
-class Image {
-  Image({
-    required  this.medium,
-     required this.original,
+class Img {
+  Img({
+    required this.medium,
+    required this.original,
   });
 
   String medium;
   String original;
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
+  factory Img.fromJson(Map<String, dynamic> json) => Img(
         medium: json["medium"],
         original: json["original"],
       );
@@ -162,8 +162,8 @@ class Image {
 
 class Links {
   Links({
-    required  this.self,
-    required  this.previousepisode,
+    required this.self,
+    required this.previousepisode,
   });
 
   Previousepisode self;
@@ -182,7 +182,7 @@ class Links {
 
 class Previousepisode {
   Previousepisode({
-     required this.href,
+    required this.href,
   });
 
   String href;
@@ -199,9 +199,9 @@ class Previousepisode {
 
 class Network {
   Network({
-    required  this.id,
-     required this.name,
-    required  this.country,
+    required this.id,
+    required this.name,
+    required this.country,
   });
 
   int id;
@@ -223,9 +223,9 @@ class Network {
 
 class Country {
   Country({
-     required this.name,
-     required this.code,
-     required this.timezone,
+    required this.name,
+    required this.code,
+    required this.timezone,
   });
 
   String name;
@@ -247,7 +247,7 @@ class Country {
 
 class Rating {
   Rating({
-     required this.average,
+    required this.average,
   });
 
   double average;
@@ -263,8 +263,8 @@ class Rating {
 
 class Schedule {
   Schedule({
-    required  this.time,
-     required this.days,
+    required this.time,
+    required this.days,
   });
 
   String time;

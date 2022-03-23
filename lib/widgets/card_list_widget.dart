@@ -88,8 +88,8 @@ class _CardListState extends State<CardList> {
                               });
                             },
                           ),
-                          top: 5,
-                          right: 5,
+                          top: 1.5,
+                          right: 1.5,
                         ),
                       ],
                     ),

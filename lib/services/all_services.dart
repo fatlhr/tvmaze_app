@@ -1,11 +1,13 @@
 // ignore_for_file: file_names
 
 import 'package:tvmaze_app/models/detail_show_model.dart';
+import 'package:tvmaze_app/models/episode_list.dart';
 
 import '../models/all_shows_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../models/cast_model.dart';
 import '../models/search_model.dart';
 
 class AllServices {
@@ -54,6 +56,31 @@ class AllServices {
       var data = jsonDecode(res.body);
       
       return DetailShow.fromJson(data);
+    }
+    throw Exception('Failed to load posts');
+  }
+  static Future<List<Cast>> getCast(String id) async {
+    String url = "https://api.tvmaze.com/shows/$id/cast";
+
+    var res = await http.get(Uri.parse(url));
+    if (res.statusCode == 200) {
+      var data = jsonDecode(res.body);
+      var cast = List<Cast>.from(
+          data.map((item) => Cast.fromJson(item)));
+
+      return cast;
+    }
+    throw Exception('Failed to load posts');
+  }
+  static Future<List<EpisodeList>> getEpisodes(String id) async {
+    String url = "https://api.tvmaze.com/shows/$id/episodes";
+
+    var res = await http.get(Uri.parse(url));
+    if (res.statusCode == 200) {
+      var data = jsonDecode(res.body);
+      var episodeList = List<EpisodeList>.from(data.map((item) => EpisodeList.fromJson(item)));
+
+      return episodeList;
     }
     throw Exception('Failed to load posts');
   }
