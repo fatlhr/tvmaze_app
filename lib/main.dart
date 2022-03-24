@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-
-import 'pages/detail_page.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:tvmaze_app/models/watchlist_model.dart';
 import 'pages/home_page.dart';
-import 'pages/ongoing_page.dart';
-import 'pages/search_page.dart';
-import 'pages/watchlists_page.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(WatchlistAdapter());
+  await Hive.openBox<Watchlist>('watchlist');
   runApp(const MyApp());
 }
 

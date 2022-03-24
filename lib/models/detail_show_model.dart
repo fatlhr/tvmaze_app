@@ -19,21 +19,13 @@ class DetailShow {
     this.language,
     this.genres,
     this.status,
-    this.runtime,
-    this.averageRuntime,
     this.premiered,
     this.ended,
     this.officialSite,
     this.schedule,
     this.rating,
-    this.weight,
-    this.network,
-    this.webChannel,
-    this.dvdCountry,
-    this.externals,
     this.image,
     this.summary,
-    this.updated,
     this.links,
   });
 
@@ -44,21 +36,13 @@ class DetailShow {
   String? language;
   List<String>? genres;
   String? status;
-  int? runtime;
-  int? averageRuntime;
   DateTime? premiered;
   DateTime? ended;
   String? officialSite;
   Schedule? schedule;
   Rating? rating;
-  int? weight;
-  Network? network;
-  dynamic webChannel;
-  dynamic dvdCountry;
-  Externals? externals;
   Img? image;
   String? summary;
-  int? updated;
   Links? links;
 
   factory DetailShow.fromJson(Map<String, dynamic> json) => DetailShow(
@@ -67,23 +51,15 @@ class DetailShow {
         name: json["name"],
         type: json["type"],
         language: json["language"],
-        genres: List<String>.from(json["genres"].map((x) => x)),
+        genres: List<String>.from(json["genres"].map((x) => x) ?? ["-"]),
         status: json["status"],
-        runtime: json["runtime"],
-        averageRuntime: json["averageRuntime"],
         premiered: DateTime.parse(json["premiered"]),
         ended: DateTime.parse(json["ended"] ?? DateTime(0).toString()),
         officialSite: json["officialSite"],
         schedule: Schedule.fromJson(json["schedule"]),
-        rating: Rating.fromJson(json["rating"]),
-        weight: json["weight"],
-        network: Network.fromJson(json["network"]),
-        webChannel: json["webChannel"],
-        dvdCountry: json["dvdCountry"],
-        externals: Externals.fromJson(json["externals"]),
+        rating: Rating.fromJson(json["rating"] ?? 0),
         image: Img.fromJson(json["image"]),
-        summary: json["summary"],
-        updated: json["updated"],
+        summary: json["summary"] ?? "",
         links: Links.fromJson(json["_links"]),
       );
 
@@ -93,10 +69,8 @@ class DetailShow {
         "name": name,
         "type": type,
         "language": language,
-        "genres": List<dynamic>.from(genres?.map((x) => x) ?? []),
+        "genres": List<dynamic>.from(genres?.map((x) => x) ?? ["-"]),
         "status": status,
-        "runtime": runtime,
-        "averageRuntime": averageRuntime,
         "premiered":
             "${premiered?.year.toString().padLeft(4, '0')}-${premiered?.month.toString().padLeft(2, '0')}-${premiered?.day.toString().padLeft(2, '0')}",
         "ended":
@@ -104,39 +78,8 @@ class DetailShow {
         "officialSite": officialSite,
         "schedule": schedule?.toJson(),
         "rating": rating?.toJson(),
-        "weight": weight,
-        "network": network?.toJson(),
-        "webChannel": webChannel,
-        "dvdCountry": dvdCountry,
-        "externals": externals?.toJson(),
         "image": image?.toJson(),
         "summary": summary,
-        "updated": updated,
-        "_links": links?.toJson(),
-      };
-}
-
-class Externals {
-  Externals({
-    required this.tvrage,
-    required this.thetvdb,
-    required this.imdb,
-  });
-
-  int tvrage;
-  int thetvdb;
-  String imdb;
-
-  factory Externals.fromJson(Map<String, dynamic> json) => Externals(
-        tvrage: json["tvrage"],
-        thetvdb: json["thetvdb"],
-        imdb: json["imdb"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "tvrage": tvrage,
-        "thetvdb": thetvdb,
-        "imdb": imdb,
       };
 }
 
@@ -197,30 +140,6 @@ class Previousepisode {
       };
 }
 
-class Network {
-  Network({
-    required this.id,
-    required this.name,
-    required this.country,
-  });
-
-  int id;
-  String name;
-  Country country;
-
-  factory Network.fromJson(Map<String, dynamic> json) => Network(
-        id: json["id"],
-        name: json["name"],
-        country: Country.fromJson(json["country"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "country": country.toJson(),
-      };
-}
-
 class Country {
   Country({
     required this.name,
@@ -247,13 +166,13 @@ class Country {
 
 class Rating {
   Rating({
-    required this.average,
+    this.average,
   });
 
-  double average;
+  double? average;
 
   factory Rating.fromJson(Map<String, dynamic> json) => Rating(
-        average: json["average"].toDouble(),
+        average: json["average"].toDouble() ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

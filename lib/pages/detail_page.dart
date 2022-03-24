@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import '../models/detail_show_model.dart';
 import '../services/all_services.dart';
 import 'package:intl/intl.dart';
 
@@ -70,11 +69,12 @@ class _DetailPageState extends State<DetailPage> {
                   return const Center(child: Text('No data found'));
                 } else {
                   var data = snapshot.data! as List;
-                  String? img = data[0]?.image?.medium;
+                  String? img;
                   String? summary;
-
                   String? title;
-
+                  if (data[0]?.image?.medium != null) {
+                    img = data[0]?.image?.medium;
+                  }
                   if (data[0]?.premiered != null && data[0]?.name != null) {
                     String year = DateFormat.y().format(data[0]!.premiered!);
                     String name = data[0]!.name ?? "No Title";

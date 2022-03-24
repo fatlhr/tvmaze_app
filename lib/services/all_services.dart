@@ -1,14 +1,14 @@
 // ignore_for_file: file_names
 
+import 'package:hive/hive.dart';
 import 'package:tvmaze_app/models/detail_show_model.dart';
 import 'package:tvmaze_app/models/episode_list.dart';
-
 import '../models/all_shows_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import '../models/cast_model.dart';
 import '../models/search_model.dart';
+import '../models/watchlist_model.dart';
 
 class AllServices {
   static Future<List<AllShows>> getShows(String categories) async {
@@ -35,6 +35,22 @@ class AllServices {
     throw Exception('Failed to load posts');
   }
 
+  static Future<List<AllShows>> getShowByGenre(String genre) async {
+    String url = "https://api.tvmaze.com/shows";
+
+    var res = await http.get(Uri.parse(url));
+    if (res.statusCode == 200) {
+      var data = jsonDecode(res.body);
+      var allShows = List<AllShows>.from(data.map(
+        (item) => AllShows.fromJson(item),
+      ));
+      allShows =
+          allShows.where((item) => (item.genres!.contains(genre))).toList();
+      return allShows;
+    }
+    throw Exception('Failed to load posts');
+  }
+
   static Future<List<SearchShows>> getSearch(String searchResult) async {
     String url = "https://api.tvmaze.com/search/shows?q=$searchResult";
 
@@ -48,40 +64,65 @@ class AllServices {
     }
     throw Exception('Failed to load posts');
   }
+
   static Future<DetailShow> getDetail(String id) async {
     String url = "https://api.tvmaze.com/shows/$id";
 
     var res = await http.get(Uri.parse(url));
     if (res.statusCode == 200) {
       var data = jsonDecode(res.body);
-      
+
       return DetailShow.fromJson(data);
     }
     throw Exception('Failed to load posts');
   }
+
   static Future<List<Cast>> getCast(String id) async {
     String url = "https://api.tvmaze.com/shows/$id/cast";
 
     var res = await http.get(Uri.parse(url));
     if (res.statusCode == 200) {
       var data = jsonDecode(res.body);
-      var cast = List<Cast>.from(
-          data.map((item) => Cast.fromJson(item)));
+      var cast = List<Cast>.from(data.map((item) => Cast.fromJson(item)));
 
       return cast;
     }
     throw Exception('Failed to load posts');
   }
+
   static Future<List<EpisodeList>> getEpisodes(String id) async {
     String url = "https://api.tvmaze.com/shows/$id/episodes";
 
     var res = await http.get(Uri.parse(url));
     if (res.statusCode == 200) {
       var data = jsonDecode(res.body);
-      var episodeList = List<EpisodeList>.from(data.map((item) => EpisodeList.fromJson(item)));
+      var episodeList = List<EpisodeList>.from(
+          data.map((item) => EpisodeList.fromJson(item)));
 
       return episodeList;
     }
     throw Exception('Failed to load posts');
+  }
+
+  static Future addWatchlist(
+    int id,
+    String? title,
+    String? summary,
+    String? image,
+  ) async {
+    final watchlist = Watchlist()
+      ..id = id.toInt()
+      ..title = title ?? "-"
+      ..summary = summary ?? "-"
+      ..image = image ?? "";
+
+    final Box<Watchlist> box;
+    if (!Hive.isBoxOpen('watchlist')) {
+      box = await Hive.openBox<Watchlist>('watchlist');
+    } else {
+      box = Hive.box<Watchlist>('watchlist');
+    }
+
+    box.add(watchlist);
   }
 }

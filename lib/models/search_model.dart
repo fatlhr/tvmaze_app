@@ -347,21 +347,13 @@ class SearchShowsShow {
   String? language;
   List<String?>? genres;
   String? status;
-  int? runtime;
-  int? averageRuntime;
   String? premiered;
   String? ended;
   String? officialSite;
   SearchShowsShowSchedule? schedule;
   SearchShowsShowRating? rating;
-  int? weight;
-  SearchShowsShowNetwork? network;
-  String? webChannel;
-  String? dvdCountry;
-  SearchShowsShowExternals? externals;
   SearchShowsShowImage? image;
   String? summary;
-  int? updated;
   SearchShowsShowLinks? Links;
 
   SearchShowsShow({
@@ -372,21 +364,13 @@ class SearchShowsShow {
     this.language,
     this.genres,
     this.status,
-    this.runtime,
-    this.averageRuntime,
     this.premiered,
     this.ended,
     this.officialSite,
     this.schedule,
     this.rating,
-    this.weight,
-    this.network,
-    this.webChannel,
-    this.dvdCountry,
-    this.externals,
     this.image,
     this.summary,
-    this.updated,
     this.Links,
   });
   SearchShowsShow.fromJson(Map<String, dynamic> json) {
@@ -404,8 +388,6 @@ class SearchShowsShow {
       genres = arr0;
     }
     status = json['status']?.toString();
-    runtime = json['runtime']?.toInt();
-    averageRuntime = json['averageRuntime']?.toInt();
     premiered = json['premiered']?.toString();
     ended = json['ended']?.toString();
     officialSite = json['officialSite']?.toString();
@@ -415,20 +397,10 @@ class SearchShowsShow {
     rating = (json['rating'] != null)
         ? SearchShowsShowRating.fromJson(json['rating'])
         : null;
-    weight = json['weight']?.toInt();
-    network = (json['network'] != null)
-        ? SearchShowsShowNetwork.fromJson(json['network'])
-        : null;
-    webChannel = json['webChannel']?.toString();
-    dvdCountry = json['dvdCountry']?.toString();
-    externals = (json['externals'] != null)
-        ? SearchShowsShowExternals.fromJson(json['externals'])
-        : null;
     image = (json['image'] != null)
         ? SearchShowsShowImage.fromJson(json['image'])
         : null;
     summary = json['summary']?.toString();
-    updated = json['updated']?.toInt();
     Links = (json['_links'] != null)
         ? SearchShowsShowLinks.fromJson(json['_links'])
         : null;
@@ -449,8 +421,6 @@ class SearchShowsShow {
       data['genres'] = arr0;
     }
     data['status'] = status;
-    data['runtime'] = runtime;
-    data['averageRuntime'] = averageRuntime;
     data['premiered'] = premiered;
     data['ended'] = ended;
     data['officialSite'] = officialSite;
@@ -460,20 +430,10 @@ class SearchShowsShow {
     if (rating != null) {
       data['rating'] = rating!.toJson();
     }
-    data['weight'] = weight;
-    if (network != null) {
-      data['network'] = network!.toJson();
-    }
-    data['webChannel'] = webChannel;
-    data['dvdCountry'] = dvdCountry;
-    if (externals != null) {
-      data['externals'] = externals!.toJson();
-    }
     if (image != null) {
       data['image'] = image!.toJson();
     }
     data['summary'] = summary;
-    data['updated'] = updated;
     if (Links != null) {
       data['_links'] = Links!.toJson();
     }
