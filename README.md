@@ -1,6 +1,6 @@
 # tvmaze_app
 
-Merupakan test case dari IT Consultant di Bandung dengan deadline pengerjaan 1 hari.
+Aplikasi ntuk menampilkan daftar film, terdapat fitur untuk menambahkan film ke watchlist. Merupakan test case dari IT Consultant di Bandung dengan deadline pengerjaan 1 hari.
 
 ## Packages used
 - build_runner: ^2.1.8
